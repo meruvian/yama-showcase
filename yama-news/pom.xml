@@ -39,6 +39,13 @@
 		<jqueryfileupload.version>9.5.7</jqueryfileupload.version>
 	</properties>
 	
+	<repositories>
+		<repository>
+			<name>maven-snapshot</name>
+			<url>https://maven.java.net/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<!-- Unit Testing -->
 		<dependency>
