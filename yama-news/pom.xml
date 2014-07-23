@@ -41,7 +41,7 @@
 	
 	<repositories>
 		<repository>
-			<name>maven-snapshot</name>
+			<id>maven-snapshots</id>
 			<url>https://maven.java.net/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
