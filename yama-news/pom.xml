@@ -27,6 +27,7 @@
 		<jackson2.version>2.3.2</jackson2.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<commons.lang.version>3.3.2</commons.lang.version>
+		<jasypt.version>1.9.2</jasypt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
 		<jdbc.group.id>mysql</jdbc.group.id>
