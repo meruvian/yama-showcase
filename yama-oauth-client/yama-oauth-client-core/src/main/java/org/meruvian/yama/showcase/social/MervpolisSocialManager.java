@@ -16,6 +16,10 @@
 package org.meruvian.yama.showcase.social;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.meruvian.yama.repository.LogInformation;
+import org.meruvian.yama.repository.commons.Address;
+import org.meruvian.yama.repository.commons.DefaultFileInfo;
+import org.meruvian.yama.repository.commons.Name;
 import org.meruvian.yama.repository.user.DefaultUser;
 import org.meruvian.yama.repository.user.User;
 import org.meruvian.yama.service.social.AbstractSocialManager;
@@ -41,6 +45,14 @@ public class MervpolisSocialManager extends AbstractSocialManager<Mervpolis> {
 		String randomUsername = RandomStringUtils.random(8, alphanumeric);
 		
 		DefaultUser user = new DefaultUser(mervpolis.userOperations().getUser());
+		user.setId(null);
+		user.setAddress(new Address());
+		user.setLogInformation(new LogInformation());
+		user.setFileInfo(new DefaultFileInfo());
+		
+		if (user.getName() == null) {
+			user.setName(new Name("", user.getUsername(), "", ""));
+		}
 		user.setUsername(user.getName().getFirst() + user.getName().getLast() + randomUsername);
 		
 		String password = RandomStringUtils.random(8, alphanumeric);

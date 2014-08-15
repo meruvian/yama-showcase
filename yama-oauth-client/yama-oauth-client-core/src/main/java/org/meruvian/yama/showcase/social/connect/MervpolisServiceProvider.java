@@ -28,7 +28,7 @@ public class MervpolisServiceProvider extends AbstractOAuth2ServiceProvider<Merv
 
 	public MervpolisServiceProvider(String clientId, String clientSecret) {
 		super(new OAuth2Template(clientId, clientSecret, 
-				"http://yama.meruvian.org:8080/oauth/authorize", "http://yama.meruvian.org:8080/oauth/token"));
+				"http://id.mervpolis.com/oauth/authorize", "http://id.mervpolis.com/oauth/token"));
 	}
 
 	@Override
