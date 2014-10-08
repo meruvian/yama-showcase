@@ -50,6 +50,7 @@ public class News extends DefaultJpaPersistence {
 		this.title = title;
 	}
 	
+	@Column(length = 3000)
 	public String getContent() {
 		return content;
 	}
@@ -58,6 +59,7 @@ public class News extends DefaultJpaPersistence {
 		this.content = content;
 	}
 
+	@Column(length = 3000)
 	public String getDescription() {
 		return description;
 	}
@@ -66,7 +68,6 @@ public class News extends DefaultJpaPersistence {
 		this.description = description;
 	}
 
-	@Column(name = "abstract")
 	public String getAbstracts() {
 		return abstracts;
 	}
