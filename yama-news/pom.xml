@@ -6,12 +6,14 @@
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-  <properties>
+	<properties>
 		<struts2.version>2.3.16.2</struts2.version>
 		<struts2.bootstrap.version>2.0.0</struts2.bootstrap.version>
 		<inca.version>1.1.0</inca.version>
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<spring.security.oauth.version>2.0.2.RELEASE</spring.security.oauth.version>
+		<spring.security.jwt.version>1.0.2.RELEASE</spring.security.jwt.version>
 		<spring.data.commons.version>1.8.0.RELEASE</spring.data.commons.version>
 		<spring.data.jpa.version>1.6.0.RELEASE</spring.data.jpa.version>
 		<spring.social.core.version>1.1.0.RELEASE</spring.social.core.version>
@@ -23,6 +25,7 @@
 		<c3p0.version>0.9.1</c3p0.version>
 		<hikaricp.version>1.3.8</hikaricp.version>
 		<resteasy.version>3.0.8.Final</resteasy.version>
+		<swagger.version>1.3.1</swagger.version>
 		<jackson.version>1.9.6</jackson.version>
 		<jackson2.version>2.3.2</jackson2.version>
 		<slf4j.version>1.7.7</slf4j.version>
@@ -38,8 +41,9 @@
 		<bootstrap.version>3.1.1-1</bootstrap.version>
 		<fontawesome.version>4.0.3</fontawesome.version>
 		<jqueryfileupload.version>9.5.7</jqueryfileupload.version>
+		<jetty.version>8.1.3.v20120416</jetty.version>
 	</properties>
-	
+
 	<repositories>
 		<repository>
 			<id>maven-snapshots</id>
@@ -49,7 +53,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<dependencies>
 		<!-- Unit Testing -->
 		<dependency>
@@ -94,6 +98,12 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -101,94 +111,133 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jsp-api</artifactId>
 			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
-				
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.7</version>
-		</dependency>
-
-		<!-- Database -->
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>${hikaricp.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${jdbc.group.id}</groupId>
-			<artifactId>${jdbc.artifact.id}</artifactId>
-			<version>${jdbc.version}</version>
-		</dependency>
-
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-
-		<!-- Yama Services -->
-		<dependency>
-			<groupId>org.meruvian.yama</groupId>
-			<artifactId>yama-service-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.meruvian.yama</groupId>
-			<artifactId>yama-service-jpa</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.meruvian.yama</groupId>
-			<artifactId>yama-service-social-facebook</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.meruvian.yama</groupId>
-			<artifactId>yama-service-social-google</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Commons -->
-		<dependency>
-			<groupId>commons-validator</groupId>
-			<artifactId>commons-validator</artifactId>
-			<version>1.4.0</version>
-		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Database -->
+			<dependency>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP</artifactId>
+				<version>${hikaricp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${jdbc.group.id}</groupId>
+				<artifactId>${jdbc.artifact.id}</artifactId>
+				<version>${jdbc.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-ehcache</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<!-- Spring Security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+
+			<!-- Yama Services -->
+			<dependency>
+				<groupId>org.meruvian.yama</groupId>
+				<artifactId>yama-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.meruvian.yama</groupId>
+				<artifactId>yama-service-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.meruvian.yama</groupId>
+				<artifactId>yama-service-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.meruvian.yama</groupId>
+				<artifactId>yama-social-facebook</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.meruvian.yama</groupId>
+				<artifactId>yama-social-google</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- JAX-RS -->
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>jaxrs-api</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+
+			<!-- API Documentation -->
+			<dependency>
+				<groupId>com.wordnik</groupId>
+				<artifactId>swagger-jaxrs_2.10</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+
+			<!-- Commons -->
+			<dependency>
+				<groupId>commons-validator</groupId>
+				<artifactId>commons-validator</artifactId>
+				<version>1.4.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -201,12 +250,21 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>${jetty.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
-	
+
 	<modules>
-		<module>yama-news-repositories</module>
 		<module>yama-news-webapp</module>
 		<module>yama-news-api</module>
+		<module>yama-news-core</module>
 	</modules>
 
 </project>

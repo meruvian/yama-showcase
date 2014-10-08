@@ -28,10 +28,10 @@ import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.Action.HttpMethod;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
-import org.meruvian.yama.repository.user.DefaultUser;
-import org.meruvian.yama.repository.user.User;
-import org.meruvian.yama.service.SessionCredential;
-import org.meruvian.yama.service.UserManager;
+import org.meruvian.yama.core.user.DefaultUser;
+import org.meruvian.yama.core.user.User;
+import org.meruvian.yama.core.user.UserManager;
+import org.meruvian.yama.web.CredentialsManager;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -44,12 +44,13 @@ import com.opensymphony.xwork2.ActionSupport;
 public class RegistrationAction extends ActionSupport implements ServletRequestAware {
 	@Inject
 	private UserManager userManager;
-	
-	@Inject
-	private SessionCredential sessionCredential;
+
 	
 	@Inject
 	private ReCaptcha reCaptcha;
+	
+	@Inject
+	private CredentialsManager credentialsManager;
 	
 	@Value("${recaptcha.active}")
 	private boolean recaptchaActive;
@@ -87,7 +88,7 @@ public class RegistrationAction extends ActionSupport implements ServletRequestA
 		}
 		
 		User u = userManager.saveUser(user);
-		sessionCredential.registerAuthentication(u.getId());
+		credentialsManager.registerAuthentication(u.getId());
 		
 		return new ActionResult("redirect", "/profile?registrationSuccess");
 	}

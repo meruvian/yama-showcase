@@ -23,12 +23,13 @@ import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.Action.HttpMethod;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
-import org.meruvian.yama.repository.role.DefaultRole;
-import org.meruvian.yama.repository.role.Role;
-import org.meruvian.yama.repository.user.DefaultUser;
-import org.meruvian.yama.repository.user.User;
-import org.meruvian.yama.service.RoleManager;
-import org.meruvian.yama.service.UserManager;
+import org.meruvian.yama.core.role.DefaultRole;
+import org.meruvian.yama.core.role.Role;
+import org.meruvian.yama.core.role.RoleManager;
+import org.meruvian.yama.core.role.UserRole;
+import org.meruvian.yama.core.user.DefaultUser;
+import org.meruvian.yama.core.user.User;
+import org.meruvian.yama.core.user.UserManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -85,8 +86,8 @@ public class UserAction extends ActionSupport {
 		if (StringUtils.equalsIgnoreCase(username, "-")) {
 			redirectUri = "/admin/users?success";
 		} else {
-			for (Role r : userManager.findRoleByUser(u, null)) {
-				userManager.removeRoleFromUser(u, r);
+			for (UserRole r : userManager.findRoleByUser(u, null)) {
+				userManager.removeRoleFromUser(u, r.getRole());
 			}
 		}
 		
@@ -118,7 +119,7 @@ public class UserAction extends ActionSupport {
 			User user = userManager.getUserByUsername(username);
 			actionResult.addToModel("user", user);
 			
-			Page<? extends Role> userRoles = userManager.findRoleByUser(user, null);
+			Page<? extends UserRole> userRoles = userManager.findRoleByUser(user, null);
 			actionResult.addToModel("userRoles", userRoles);
 		}
 	}

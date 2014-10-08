@@ -22,9 +22,9 @@ import javax.inject.Inject;
 import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
-import org.meruvian.yama.service.SessionCredential;
-import org.meruvian.yama.service.social.SocialManager;
-import org.meruvian.yama.service.social.SocialManagerLocator;
+import org.meruvian.yama.social.core.SocialManager;
+import org.meruvian.yama.social.core.SocialManagerLocator;
+import org.meruvian.yama.web.CredentialsManager;
 import org.springframework.social.connect.Connection;
 
 /**
@@ -37,7 +37,7 @@ public class LoginAction {
 	private SocialManagerLocator managerLocator;
 	
 	@Inject
-	private SessionCredential sessionCredential;
+	private CredentialsManager credentialsManager;
 	
 	@Action
 	public ActionResult loginForm() {
@@ -63,7 +63,7 @@ public class LoginAction {
 			if (userIds.size() == 1) { // Signin
 				String userId = userIds.get(0);
 
-				sessionCredential.registerAuthentication(userId);
+				credentialsManager.registerAuthentication(userId);
 			} else {
 
 			}

@@ -42,6 +42,7 @@
 								<i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
+								<li><a href="<@s.url value="/backend/category" />"><i class="fa fa-angle-double-right"></i> Category</a></li>
 								<li><a href="<@s.url value="/backend/news" />"><i class="fa fa-angle-double-right"></i> News</a></li>
 							</ul>
 						</li>

@@ -33,13 +33,14 @@ import org.meruvian.inca.struts2.rest.annotation.ActionParam;
 import org.meruvian.inca.struts2.rest.annotation.Param;
 import org.meruvian.inca.struts2.rest.annotation.Result;
 import org.meruvian.inca.struts2.rest.annotation.Results;
-import org.meruvian.yama.repository.commons.DefaultFileInfo;
-import org.meruvian.yama.repository.commons.FileInfo;
-import org.meruvian.yama.repository.user.DefaultUser;
-import org.meruvian.yama.repository.user.User;
-import org.meruvian.yama.service.FileInfoManager;
-import org.meruvian.yama.service.SessionCredential;
-import org.meruvian.yama.service.UserManager;
+import org.meruvian.yama.core.commons.DefaultFileInfo;
+import org.meruvian.yama.core.commons.FileInfo;
+import org.meruvian.yama.core.commons.FileInfoManager;
+import org.meruvian.yama.core.user.DefaultUser;
+import org.meruvian.yama.core.user.User;
+import org.meruvian.yama.core.user.UserManager;
+import org.meruvian.yama.web.CredentialsManager;
+import org.meruvian.yama.web.SessionCredentials;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -56,7 +57,7 @@ public class ProfileAction extends ActionSupport {
 	private FileInfoManager fileInfoManager;
 	
 	@Inject
-	private SessionCredential sessionCredential;
+	private CredentialsManager credentialsManager;
 	
 	private InputStream picture;
 
@@ -66,7 +67,7 @@ public class ProfileAction extends ActionSupport {
 	
 	@Action(method = HttpMethod.GET)
 	public ActionResult profileForm() {
-		User user = sessionCredential.getCurrentUser();
+		User user = SessionCredentials.getCurrentUser();
 		
 		return new ActionResult("freemarker", "/view/profile/profile-form.ftl").addToModel("user", user);
 	}
@@ -75,7 +76,7 @@ public class ProfileAction extends ActionSupport {
 	public ActionResult profile(@ActionParam("user") DefaultUser user, @ActionParam("edit") String edit, 
 			@ActionParam("confirmPassword") String copass, @ActionParam("profilePicture") File file,
 			@ActionParam("profilePictureFileName") String fileName) throws IOException {
-		User u = sessionCredential.getCurrentUser();
+		User u = SessionCredentials.getCurrentUser();
 		
 		if (StringUtils.equalsIgnoreCase(edit, "password")) {
 			validatePassword(user.getPassword(), copass);
@@ -101,7 +102,7 @@ public class ProfileAction extends ActionSupport {
 				return new ActionResult("freemarker", "/view/profile/profile-form.ftl");
 			
 			userManager.saveUser(user);
-			sessionCredential.registerAuthentication(user.getId());
+			credentialsManager.registerAuthentication(user.getId());
 		}
 		
 		return new ActionResult("redirect", "/profile?success");
@@ -117,7 +118,7 @@ public class ProfileAction extends ActionSupport {
 			})
 	})
 	public String getPhoto() throws IOException {
-		User u = sessionCredential.getCurrentUser();
+		User u = SessionCredentials.getCurrentUser();
 		FileInfo fileInfo = u.getFileInfo();
 		if (fileInfo == null) {
 			return "no-profile";
@@ -149,7 +150,7 @@ public class ProfileAction extends ActionSupport {
 	}
 
 	private void validateUser(DefaultUser user) {
-		User currentUser = sessionCredential.getCurrentUser();
+		User currentUser = SessionCredentials.getCurrentUser();
 		
 		if (StringUtils.isBlank(user.getUsername()))
 			addFieldError("user.username", getText("message.profile.username.notempty"));

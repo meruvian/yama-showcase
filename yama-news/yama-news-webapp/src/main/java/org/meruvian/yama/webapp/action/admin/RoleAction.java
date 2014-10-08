@@ -22,9 +22,9 @@ import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.Action.HttpMethod;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
-import org.meruvian.yama.repository.role.DefaultRole;
-import org.meruvian.yama.repository.role.Role;
-import org.meruvian.yama.service.RoleManager;
+import org.meruvian.yama.core.role.DefaultRole;
+import org.meruvian.yama.core.role.Role;
+import org.meruvian.yama.core.role.RoleManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
