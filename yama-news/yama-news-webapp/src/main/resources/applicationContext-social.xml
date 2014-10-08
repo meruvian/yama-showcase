@@ -27,18 +27,20 @@
 		</property>
 	</bean>
 	
-	<bean id="connectionSignUp" class="org.meruvian.yama.service.social.SocialConnectionSignUp" />
+	<bean id="connectionSignUp" class="org.meruvian.yama.social.core.SocialConnectionSignUp" autowire="byType" />
 	
-	<bean id="socialManagerLocator" class="org.meruvian.yama.service.social.SocialManagerRegistry">
+	<bean id="socialManagerLocator" class="org.meruvian.yama.social.core.SocialManagerRegistry">
 		<property name="socialManagers">
 			<array>
-				<bean class="org.meruvian.yama.service.social.facebook.FacebookSocialManager" p:redirectUri="${social.facebook.redirectUri}" p:scope="${social.facebook.scope}">
+				<bean class="org.meruvian.yama.social.facebook.FacebookSocialManager" p:redirectUri="${social.facebook.redirectUri}" p:scope="${social.facebook.scope}" autowire="byType">
 					<constructor-arg ref="facebookConnectionFactory" />
 				</bean>
-				<bean class="org.meruvian.yama.service.social.google.GoogleSocialManager" p:redirectUri="${social.google.redirectUri}" p:scope="${social.google.scope}">
+				<bean class="org.meruvian.yama.social.google.GoogleSocialManager" p:redirectUri="${social.google.redirectUri}" p:scope="${social.google.scope}" autowire="byType">
 					<constructor-arg ref="googleConnectionFactory" />
 				</bean>
 			</array>
 		</property>
 	</bean>
+	
+	<import resource="org/meruvian/yama/applicationContext-social.xml"/>
 </beans>

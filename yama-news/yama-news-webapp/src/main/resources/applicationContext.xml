@@ -6,9 +6,15 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="org.meruvian.yama.service, org.meruvian.yama.webapp, org.meruvian.yama.example.service, org.meruvian.yama.example.webapp" />
-	<context:property-placeholder location="classpath:/yama.properties" />
-
+	<context:component-scan base-package="org.meruvian.yama" />
+	<context:property-placeholder properties-ref="yamaProperties" />
+	
+	<util:properties id="yamaProperties" location="classpath:/yama.properties" />
+	
 	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl"
 		p:privateKey="${recaptcha.private.key}" p:publicKey="${recaptcha.public.key}" />
+	
+	<import resource="org/meruvian/yama/applicationContext-repository-jpa.xml"/>
+	<import resource="org/meruvian/yama/applicationContext-service-jpa.xml"/>
+	<import resource="org/meruvian/yama/applicationContext-web-jpa.xml"/>
 </beans>
