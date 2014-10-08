@@ -31,8 +31,7 @@
 		p:dataSource-ref="dataSource" p:persistenceProviderClass="org.hibernate.ejb.HibernatePersistence">
 		<property name="packagesToScan">
 			<array>
-				<value>org.meruvian.yama.repository.jpa</value>
-				<value>org.meruvian.yama.example.repository.jpa</value>
+				<value>org.meruvian.yama</value>
 			</array>
 		</property>
 	</bean>
@@ -42,5 +41,5 @@
 
 	<tx:annotation-driven />
 
-	<jpa:repositories base-package="org.meruvian.yama.repository.jpa, org.meruvian.yama.example.repository.jpa" />
+	<jpa:repositories base-package="org.meruvian.yama.showcase" />
 </beans>
