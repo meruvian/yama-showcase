@@ -265,6 +265,7 @@
 		<module>yama-news-webapp</module>
 		<module>yama-news-api</module>
 		<module>yama-news-core</module>
+		<module>yama-oauth-client-core</module>
 	</modules>
 
 </project>

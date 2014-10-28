@@ -10,6 +10,7 @@
 	<package name="yama-default" extends="struts-default">
 		<interceptors>
 			<interceptor name="sessionCredential" class="org.meruvian.yama.webapp.interceptor.SessionCredentialInterceptor" />
+			<interceptor name="oauth2ClientContext" class="org.meruvian.yama.webapp.interceptor.OAuth2ClientContextInterceptor" />
 
 			<interceptor-stack name="adminStack">
 				<interceptor-ref name="exception" />
@@ -41,6 +42,7 @@
 					<param name="excludeMethods">input,back,cancel,browse</param>
 				</interceptor-ref>
 				<interceptor-ref name="sessionCredential" />
+				<interceptor-ref name="oauth2ClientContext" />
 			</interceptor-stack>
 		</interceptors>
 

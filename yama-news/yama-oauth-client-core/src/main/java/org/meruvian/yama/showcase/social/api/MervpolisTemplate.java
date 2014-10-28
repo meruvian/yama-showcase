@@ -15,24 +15,24 @@
  */
 package org.meruvian.yama.showcase.social.api;
 
-import org.meruvian.yama.repository.user.DefaultUser;
-import org.meruvian.yama.repository.user.User;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 
 /**
  * @author Dian Aditya
  *
  */
-public class UserTemplate implements UserOperations {
-	private RestTemplate restTemplate;
-
-	public UserTemplate(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
+public class MervpolisTemplate extends AbstractOAuth2ApiBinding implements Mervpolis {
+	private UserOperations userOperations;
+	
+	public MervpolisTemplate(String accessToken) {
+		super(accessToken);
+		
+		this.userOperations = new UserTemplate(getRestTemplate());
 	}
 	
 	@Override
-	public User getUser() {
-		return restTemplate.getForObject("http://api.merv.id/v1/admin/users/me", DefaultUser.class);
+	public UserOperations userOperations() {
+		return userOperations;
 	}
 
 }

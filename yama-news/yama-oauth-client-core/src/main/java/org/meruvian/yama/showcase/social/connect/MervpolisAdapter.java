@@ -15,7 +15,8 @@
  */
 package org.meruvian.yama.showcase.social.connect;
 
-import org.meruvian.yama.repository.user.User;
+import org.apache.commons.lang3.StringUtils;
+import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.showcase.social.api.Mervpolis;
 import org.springframework.social.connect.ApiAdapter;
 import org.springframework.social.connect.ConnectionValues;
@@ -35,11 +36,10 @@ public class MervpolisAdapter implements ApiAdapter<Mervpolis>{
 
 	@Override
 	public void setConnectionValues(Mervpolis api, ConnectionValues values) {
-		System.out.println(api.userOperations());
 		User user = api.userOperations().getUser();
 		values.setProviderUserId(user.getId());
 		values.setDisplayName(user.getUsername());
-		values.setProfileUrl("http://www.merv.id/admin/users/" + user.getUsername());
+		values.setProfileUrl(StringUtils.join("http://www.merv.id/admin/users/", user.getUsername()));
 	}
 
 	@Override

@@ -52,17 +52,14 @@ public class LoginAction {
 	}
 	
 	@Action(name = "/social/{social}/callback")
-	public ActionResult socialLoginCallback(@ActionParam("social") String social,
-			@ActionParam("code") String code) {
+	public ActionResult socialLoginCallback(@ActionParam("social") String social, @ActionParam("code") String code) {
 		SocialManager<?> manager = managerLocator.getSocialManager(social);
 		Connection<?> connection = manager.createConnection(code, null);
-		
 		if (manager.isAuthorized(connection)) {
 			List<String> userIds = manager.getUsersConnectionManager().findUserIdsWithConnection(connection);
 			
 			if (userIds.size() == 1) { // Signin
 				String userId = userIds.get(0);
-
 				credentialsManager.registerAuthentication(userId);
 			} else {
 

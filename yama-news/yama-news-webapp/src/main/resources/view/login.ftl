@@ -24,6 +24,10 @@
 			</@s.form>
 
 			<div class="margin text-center">
+				<a class="btn btn-lg btn-default" href="<@s.url value="/login/social/mervpolis/auth" />">
+					<strong><@s.text name="label.login.social.mervpolis" /></strong>
+				</a>
+				<br>
 				<span><@s.text name="label.login.social" /></span>
 				<br />
 				<a class="btn bg-light-blue btn-circle" href="<@s.url value="/login/social/facebook/auth" />">

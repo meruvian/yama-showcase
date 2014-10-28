@@ -15,8 +15,8 @@
  */
 package org.meruvian.yama.showcase.social.api;
 
-import org.meruvian.yama.repository.user.DefaultUser;
-import org.meruvian.yama.repository.user.User;
+import org.meruvian.yama.core.user.DefaultUser;
+import org.meruvian.yama.core.user.User;
 import org.springframework.web.client.RestTemplate;
 
 /**

@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.showcase.social.api;
+package org.meruvian.yama.showcase.social.connect;
 
-import org.meruvian.yama.repository.user.DefaultUser;
-import org.meruvian.yama.repository.user.User;
-import org.springframework.web.client.RestTemplate;
+import org.meruvian.yama.showcase.social.api.Mervpolis;
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 
 /**
  * @author Dian Aditya
  *
  */
-public class UserTemplate implements UserOperations {
-	private RestTemplate restTemplate;
+public class MervpolisConnectionFactory extends OAuth2ConnectionFactory<Mervpolis> {
 
-	public UserTemplate(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
+	public MervpolisConnectionFactory(String appId, String appSecret) {
+		super("mervpolis", new MervpolisServiceProvider(appId, appSecret), new MervpolisAdapter());
 	}
-	
-	@Override
-	public User getUser() {
-		return restTemplate.getForObject("http://api.merv.id/v1/admin/users/me", DefaultUser.class);
-	}
-
 }

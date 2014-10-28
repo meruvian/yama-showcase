@@ -3,8 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:facebook="http://www.springframework.org/schema/social/facebook"
 	xmlns:google="http://www.springframework.org/schema/social/google"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
 		http://www.springframework.org/schema/social/google http://www.springframework.org/schema/social/spring-social-google.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
@@ -18,11 +20,17 @@
 		<constructor-arg value="${social.google.appSecret}" />
 	</bean>
 	
+	<bean id="mervpolisConnectionFactory" class="org.meruvian.yama.showcase.social.connect.MervpolisConnectionFactory">
+		<constructor-arg value="${social.yama.appId}" />
+		<constructor-arg value="${social.yama.appSecret}" />
+	</bean>
+	
 	<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
 		<property name="connectionFactories">
 			<array>
 				<ref bean="facebookConnectionFactory" />
 				<ref bean="googleConnectionFactory" />
+				<ref bean="mervpolisConnectionFactory" />
 			</array>
 		</property>
 	</bean>
@@ -37,6 +45,9 @@
 				</bean>
 				<bean class="org.meruvian.yama.social.google.GoogleSocialManager" p:redirectUri="${social.google.redirectUri}" p:scope="${social.google.scope}" autowire="byType">
 					<constructor-arg ref="googleConnectionFactory" />
+				</bean>
+				<bean class="org.meruvian.yama.showcase.social.MervpolisSocialManager" p:redirectUri="${social.yama.redirectUri}" p:scope="${social.yama.scope}" autowire="byType">
+					<constructor-arg ref="mervpolisConnectionFactory" />
 				</bean>
 			</array>
 		</property>
