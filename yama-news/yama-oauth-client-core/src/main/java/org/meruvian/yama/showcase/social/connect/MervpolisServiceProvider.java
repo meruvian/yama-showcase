@@ -28,7 +28,7 @@ public class MervpolisServiceProvider extends AbstractOAuth2ServiceProvider<Merv
 
 	public MervpolisServiceProvider(String clientId, String clientSecret) {
 		super(new OAuth2Template(clientId, clientSecret, 
-				"http://www.merv.id/oauth/authorize", "http://www.merv.id/oauth/token"));
+				"http://www.merv.id/oauth/authorize", "http://www.merv.id/oauth/token"){{ setUseParametersForClientAuthentication(true); }});
 	}
 
 	@Override

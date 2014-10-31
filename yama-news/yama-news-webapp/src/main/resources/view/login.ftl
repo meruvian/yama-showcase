@@ -6,7 +6,7 @@
 	<body>
 		<div class="form-box" id="login-box">
 			<div class="header bg-gray">
-				<img src="<@s.url value="/images/logo.png" />" />
+				<img src="<@s.url value="/images/flat_meruvian_200px.png" />" />
 			</div>
 			<@s.form action="${request.contextPath}${request.servletPath}/do" method="post" theme="bootstrap">
 				<div class="body bg-gray">
@@ -24,17 +24,25 @@
 			</@s.form>
 
 			<div class="margin text-center">
-				<a class="btn btn-lg btn-default" href="<@s.url value="/login/social/mervpolis/auth" />">
-					<strong><@s.text name="label.login.social.mervpolis" /></strong>
-				</a>
-				<br>
 				<span><@s.text name="label.login.social" /></span>
 				<br />
-				<a class="btn bg-light-blue btn-circle" href="<@s.url value="/login/social/facebook/auth" />">
-					<i class="fa fa-facebook"></i>
+				<a href="<@s.url value="/login/social/mervpolis/auth" />">
+					<span class="fa-stack fa-3x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <img class="fa fa-stack-1x fa-inverse" style="width: 1.96em; height: 1.96em;" src="<@s.url value="/images/midas_96px.png" />"/>
+                    </span>
 				</a>
-				<a class="btn bg-red btn-circle" href="<@s.url value="/login/social/google/auth" />">
-					<i class="fa fa-google-plus"></i>
+				<a href="<@s.url value="/login/social/facebook/auth" />">
+					<span class="fa-stack fa-3x">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>
+				</a>
+				<a href="<@s.url value="/login/social/google/auth" />">
+					<span class="fa-stack fa-3x">
+                        <i class="fa fa-circle fa-stack-2x" style="color : #f56954"></i>
+                        <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                    </span>
 				</a>
 			</div>
 		</div>
