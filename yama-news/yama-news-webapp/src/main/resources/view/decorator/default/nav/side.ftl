@@ -46,6 +46,12 @@
 								<li><a href="<@s.url value="/backend/news" />"><i class="fa fa-angle-double-right"></i> News</a></li>
 							</ul>
 						</li>
+						<li>
+							<a href="<@s.url value="/applications" />">
+								<i class="fa fa-cube"></i> 
+								<span><@s.text name="menu.main.application" /></span>
+							</a>
+						</li>
 					</ul>
 				</section>
 				<!-- /.sidebar -->
