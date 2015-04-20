@@ -1,0 +1,96 @@
+<header header="Articles" />
+<div class="row">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12">
+				<button class="btn btn-primary col-md-1 col-xs-12" ng-click="openForm()">
+					<span class="fa fa-plus"></span>
+				</button>
+
+				<form ng-submit="searchParams.page=1;search(searchParams);" class="pull-right col-md-6 col-xs-12">
+					<fieldset>
+						<div class="form-group col-md-10 col-xs-12">
+							<input type="text" class="form-control" ng-model="searchParams.q" placeholder="Search..." autofocus>
+						</div>
+						<button type="submit" value="Search" class="btn btn-default col-md-2 col-xs-12">
+							<span class="fa fa-search"></span>
+						</button>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box">
+					<div class="box-header">
+					</div>
+					<div class="box-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Title</th>
+										<th>Content</th>
+										<th>Status</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="article in articles">
+										<td><a href="" ng-click="openForm(article)"><span ng-bind="article.title"></a></span></td>
+										<td ng-bind="article.content"></td>
+										<td ng-bind="article.status"></td>
+										<td>
+											<a href="" class="btn btn-danger btn-xs" ng-click="remove(article)">
+												<span class="fa fa-trash"></span>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="box-footer">
+						<div class="row">
+							<div class="col-md-6">
+								<pagination total-items="articles.meta.totalElements" ng-model="page" items-per-page="articles.meta.size" ng-change="search(searchParams)"></pagination>
+							</div>
+							<div class="col-md-6">
+								<div class="pagination alert pull-right">Found <span ng-bind="articles.meta.totalElements"></span> entries</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.col -->
+</div>
+
+<script type="text/ng-template" id="articleForm.html">
+	<div class="modal-header">
+		<h3 class="modal-title">Add Article</h3>
+	</div>
+	<form name="articleForm" ng-submit="submit(article)" novalidate>
+		<div class="modal-body">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label" for="title">Title</label>
+					<div class="controls">
+						<input type="text" id="title" class="form-control" ng-model="article.title" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="content">Content</label>
+					<div class="  controls">
+						<textarea rows="2" id="content" class="form-control" ng-model="article.content"></textarea>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="modal-footer">
+			<input type="submit" value="Save" class="btn btn-primary col-md-3 col-xs-12">
+			<span class="label label-danger" ng-show="error">Ops something went wrong!</span>
+		</div>
+	</form>
+</script>
