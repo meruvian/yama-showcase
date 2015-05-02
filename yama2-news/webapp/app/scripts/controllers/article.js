@@ -51,9 +51,15 @@ angular.module('yama2showcaseApp').controller('ArticleCtrl', function ($scope, $
 			});
 		});
 	};
-}).controller('ArticleFormCtrl', function($scope, $modalInstance, Articles, article) {
+}).controller('ArticleFormCtrl', function($scope, $modalInstance, Articles, article, Categories) {
+
+	Categories.getList($scope.searchParams).then(function(categories) {
+		$scope.categories = categories;
+	});
+	
 	if (article) {
 		$scope.article = article;
+		$scope.article.category = article.category;
 	}
 	
 	var success = function() {
