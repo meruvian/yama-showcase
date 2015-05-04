@@ -15,6 +15,12 @@
  */
 package org.meruvian.yama.webapi.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javassist.expr.NewArray;
+
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 
@@ -45,8 +51,10 @@ public class RestArticleService implements ArticleService {
 	}
 
 	@Override
-	public Page<Article> findArticleByKeyword(String keyword, Pageable pageable) {
-		return articleRepository.findByTitleOrContent(keyword, keyword, Status.DRAFT, LogInformation.ACTIVE, pageable);
+	public Page<Article> findArticleByKeyword(String keyword, List<Status> statuses, Pageable pageable) {
+		keyword = StringUtils.join("%", keyword, "%");
+		statuses = statuses == null ? new ArrayList<Status>() : (statuses.size() > 0) ? statuses : Arrays.asList(Status.DRAFT, Status.POSTED);
+		return articleRepository.findByTitleOrContent(keyword, keyword, statuses, LogInformation.ACTIVE, pageable);
 	}
 
 	@Override

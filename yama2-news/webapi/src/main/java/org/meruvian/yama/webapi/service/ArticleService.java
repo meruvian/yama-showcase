@@ -1,6 +1,8 @@
 
 package org.meruvian.yama.webapi.service;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -13,6 +15,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.meruvian.yama.webapi.entity.Article;
+import org.meruvian.yama.webapi.entity.Article.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,7 +28,7 @@ public interface ArticleService {
 	Article getArticleById(@PathParam("articleId") String articleId);
 
 	@GET
-	Page<Article> findArticleByKeyword(@QueryParam("q") @DefaultValue("") String keyword, 
+	Page<Article> findArticleByKeyword(@QueryParam("q") @DefaultValue("") String keyword, @QueryParam("s") List<Status> status, 
 			Pageable pageable);
 	
 	@DELETE

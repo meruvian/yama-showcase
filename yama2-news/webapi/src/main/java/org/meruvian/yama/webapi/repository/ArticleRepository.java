@@ -15,6 +15,8 @@
  */
 package org.meruvian.yama.webapi.repository;
 
+import java.util.List;
+
 import org.meruvian.yama.core.DefaultRepository;
 import org.meruvian.yama.webapi.entity.Article;
 import org.meruvian.yama.webapi.entity.Article.Status;
@@ -29,9 +31,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ArticleRepository extends DefaultRepository<Article> {
-	@Query("SELECT a FROM Article a WHERE (a.title LIKE %?1% OR a.content LIKE %?2%)"
-			+ " AND a.status = ?3 AND a.logInformation.activeFlag = ?4")
-	Page<Article> findByTitleOrContent(String title, String content, Status status, 
+	@Query("SELECT a FROM Article a WHERE (a.title LIKE ?1 OR a.content LIKE ?2)"
+			+ " AND (a.status IN (?3)) AND a.logInformation.activeFlag = ?4")
+	Page<Article> findByTitleOrContent(String title, String content, List<Status> status, 
 			int activeFlag,	Pageable pageable);
 	
 	@Query("SELECT a FROM Article a WHERE YEAR(a.postDate) = ?1 AND a.status = 'POSTED'"

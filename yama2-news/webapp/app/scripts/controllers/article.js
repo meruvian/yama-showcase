@@ -51,16 +51,41 @@ angular.module('yama2showcaseApp').controller('ArticleCtrl', function ($scope, $
 			});
 		});
 	};
+	
+	// update status articles
+	$scope.updateStatus = function(article, status) {
+		article.status = status || article.status;
+		article.put().then(success, error);
+	};
+	
+	var success = function() {};
+	
+	var error = function() {
+		$scope.error = true;
+	};
+	
 }).controller('ArticleFormCtrl', function($scope, $modalInstance, Articles, article, Categories) {
 
 	Categories.getList($scope.searchParams).then(function(categories) {
 		$scope.categories = categories;
 	});
 	
+	$scope.loadCategories = function(search) {
+		Categories.getList({ q: search }).then(function(categories) {
+			$scope.categories = categories;
+		});
+	};
+	
 	if (article) {
 		$scope.article = article;
 		$scope.article.category = article.category;
+		console.log($scope.article.category);
 	}
+	
+	$scope.updateStatus = function(article, status) {
+		article.status = status || article.status;
+		article.put().then(success, error);
+	};
 	
 	var success = function() {
 		$modalInstance.close();

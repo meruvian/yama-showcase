@@ -32,6 +32,7 @@
 									<tr>
 										<th>Title</th>
 										<th>Content</th>
+										<th>Category</th>
 										<th>Status</th>
 										<th>Action</th>
 									</tr>
@@ -40,7 +41,16 @@
 									<tr ng-repeat="article in articles">
 										<td><a href="" ng-click="openForm(article)"><span ng-bind="article.title"></a></span></td>
 										<td ng-bind="article.content"></td>
-										<td ng-bind="article.status"></td>
+										<td ng-bind="article.category.name"></td>
+										<td>
+											<a href="" class="btn btn-default btn-xs" ng-click="updateStatus(article, 'POSTED')" ng-show="article.status === 'DRAFT'" title="Publish">
+												<span class="fa fa-send"></span>
+											</a>
+											<a href="" class="btn btn-default btn-xs" ng-click="updateStatus(article, 'DRAFT')" ng-show="article.status === 'POSTED'" title="Revert to Draft">
+												<span class="fa fa-history"></span>
+											</a>
+											<span class="label" ng-class="{'label-success' : article.status === 'POSTED', 'label-default' : article.status === 'DRAFT'}" ng-bind="article.status"></span>
+										</td>
 										<td>
 											<a href="" class="btn btn-danger btn-xs" ng-click="remove(article)">
 												<span class="fa fa-trash"></span>
@@ -56,7 +66,11 @@
 							<div class="col-md-6">
 								<pagination total-items="articles.meta.totalElements" ng-model="page" items-per-page="articles.meta.size" ng-change="search(searchParams)"></pagination>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
+								<span class="label label-danger" ng-show="error">Ops something went wrong!</span>
+							</div>
+							
+							<div class="col-md-2">
 								<div class="pagination alert pull-right">Found <span ng-bind="articles.meta.totalElements"></span> entries</div>
 							</div>
 						</div>
@@ -86,16 +100,29 @@
 						<textarea rows="2" id="content" class="form-control" ng-model="article.content"></textarea>
 					</div>
 				</div>
+				
 				<div class="form-group">
-					<label class="control-label" for="category">Category</label>
-					<div class="controls">
-						<select id="category"  class="form-control" ng-model="article.category" ng-options="category as category.name for category in categories"></select>
+					<label class="control-label" for="roles">Category</label>
+						<div class="controls">
+							<ui-select ng-model="article.category">
+   							<ui-select-match placeholder="Select Category">{{ $select.selected.name }}</ui-select-match>
+    						<ui-select-choices repeat="category in categories" refresh="loadCategories($select.search)">
+      							<div ng-bind-html="category.name | highlight: $select.search"></div>
+    						</ui-select-choices>
+  							</ui-select>
+						</ui-select>
 					</div>
 				</div>
 			</fieldset>
 		</div>
 		<div class="modal-footer">
 			<input type="submit" value="Save" class="btn btn-primary col-md-3 col-xs-12">
+			<a href="" class="btn btn-default col-md-3 col-xs-12" ng-click="updateStatus(article, 'POSTED')" ng-show="article.status === 'DRAFT'" title="Publish">
+				<i class="fa fa-send"> Publish</i>
+			</a>
+			<a href="" class="btn btn-default col-md-3 col-xs-12" ng-click="updateStatus(article, 'DRAFT')" ng-show="article.status === 'POSTED'" title="Revert to Draft">
+				<i class="fa fa-history"> Revert to Draft</i>
+			</a>
 			<span class="label label-danger" ng-show="error">Ops something went wrong!</span>
 		</div>
 	</form>
