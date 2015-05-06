@@ -19,26 +19,35 @@ import org.meruvian.yama.webapi.entity.Article.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 
 @Path("/api/articles")
+@Api("/articles")
 @Produces(MediaType.APPLICATION_JSON)
 public interface ArticleService {
 	@GET
 	@Path("/{articleId}")
+	@ApiOperation(httpMethod = "GET", value = "Get article by ID", response = Article.class)
 	Article getArticleById(@PathParam("articleId") String articleId);
 
 	@GET
+	@ApiOperation(httpMethod = "GET", value = "Find article by keyword", response = Article.class, responseContainer = "Page")
 	Page<Article> findArticleByKeyword(@QueryParam("q") @DefaultValue("") String keyword, @QueryParam("s") List<Status> status, 
 			Pageable pageable);
 	
 	@DELETE
 	@Path("/{articleId}")
+	@ApiOperation(httpMethod = "DELETE", value = "Delete article by ID")
 	void removeArticle(@PathParam("articleId") String articleId);
 
 	@POST
+	@ApiOperation(httpMethod = "POST", value = "Post article", response = Article.class)
 	Article saveArticle(Article article);
 	
 	@PUT
 	@Path("/{articleId}")
+	@ApiOperation(httpMethod = "PUT", value = "PUT article by ID", response = Article.class)
 	Article updateArticle(@PathParam("articleId") String articleId, Article article);
 }

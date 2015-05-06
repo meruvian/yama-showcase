@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/").permitAll()
+				.antMatchers("/api-docs").permitAll()
 				.antMatchers("/login", "/login.html", "/login/social/**").hasRole("ANONYMOUS")
 				.antMatchers("/oauth/authorize").fullyAuthenticated()
 				.and()
