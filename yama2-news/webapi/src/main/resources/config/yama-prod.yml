@@ -41,24 +41,24 @@ default:
 social:
     mervid:
         active: true
-        appId: 69718777-b3f5-4d53-be85-fde18528ea5f
-        appSecret: j/jygXp6JczO5pIJ/PXNn/x9iFrOp7pibJ6SBjDeA87R1Fj+BaP/9rfqUTT9LGJr
-        redirectUri: http://localhost:8080/login/social/mervid/callback
+        appId: 2181e855-33ce-4345-acd2-9111e6d3bae9
+        appSecret: 4/gdliEbLsml2IO4XC51DfDjlLSPZGcgXHFnMFHv328aSahA4/x75cSk//Hm5es7
+        redirectUri: http://news1.yama2.meruvian.org/login/social/mervid/callback
         scope: read write
         state: 6234
     facebook:
         active: true
-        appId: 645592102187632
-        appSecret: 88ee3cdd671536f452879042a85ae780
-        redirectUri: http://localhost:8080/login/social/facebook/callback
+        appId: 1582311285372107
+        appSecret: fe7655ddd626ca55a987423230441254
+        redirectUri: http://news1.yama2.meruvian.org/login/social/facebook/callback
         scope: email,public_profile,user_friends
         state: 6234
 
     google:
         active: true
-        appId: 712009183750-9102gsasvgb7nklms2opuo3oknk2cgm1.apps.googleusercontent.com
-        appSecret: tSN5B1QfGS0JIq69vHdNmRzt
-        redirectUri: http://localhost:8080/login/social/google/callback
+        appId: 474621335265-3bit11krp5kf8bes4eumrqabinhnuemh.apps.googleusercontent.com
+        appSecret: VKerS5V_f4bXBbbomb3Bdcod
+        redirectUri: http://news1.yama2.meruvian.org/login/social/google/callback
         scope: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email
         state: 6234
 
