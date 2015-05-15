@@ -15,8 +15,9 @@
  */
 package org.meruvian.yama.webapi.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.meruvian.yama.core.DefaultPersistence;
@@ -26,16 +27,37 @@ import org.meruvian.yama.core.DefaultPersistence;
  *
  */
 //@Entity
-//@Table(name = "yama2showcase_tags")
-public class Tags extends DefaultPersistence {
-	private String tag;
-	
-	@Column(unique = true)
-	public String getTag() {
-		return tag;
+//@Table(name = "yama2showcase_comment")
+public class Comment extends DefaultPersistence {
+	private String comment;
+	private Article article;
+	private Comment replyTo;
+
+	public String getComment() {
+		return comment;
 	}
-	
-	public void setTag(String tag) {
-		this.tag = tag;
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "article_id")
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "reply_to")
+	public Comment getReplyTo() {
+		return replyTo;
+	}
+
+	public void setReplyTo(Comment replyTo) {
+		this.replyTo = replyTo;
 	}
 }
