@@ -72,7 +72,7 @@ angular.module('yama2showcaseApp', [
 	$httpProvider.interceptors.push('Oauth2RequestInterceptor');
 
 	RestangularProvider.setBaseUrl('/api');
-	RestangularProvider.setDefaultHttpFields({cache: true});
+	RestangularProvider.setDefaultHttpFields({cache: false});
 
 	RestangularProvider.addResponseInterceptor(function(data, operation) {
 		var extractedData;
