@@ -48,16 +48,16 @@ social:
         state: 6234
     facebook:
         active: true
-        appId: 645592102187632
-        appSecret: 88ee3cdd671536f452879042a85ae780
+        appId: 1003732499638837
+        appSecret: 8091f8295b7ac12c85fbb606f3292ced
         redirectUri: http://localhost:8080/login/social/facebook/callback
         scope: email,public_profile,user_friends
         state: 6234
 
     google:
         active: true
-        appId: 712009183750-9102gsasvgb7nklms2opuo3oknk2cgm1.apps.googleusercontent.com
-        appSecret: tSN5B1QfGS0JIq69vHdNmRzt
+        appId: 474621335265-57hukgkbl1kmo7b6s8k3t5ghcjfhq1m0.apps.googleusercontent.com
+        appSecret: eO0m8FPdwzdUXzWc35R82i0h
         redirectUri: http://localhost:8080/login/social/google/callback
         scope: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email
         state: 6234

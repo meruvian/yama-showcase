@@ -69,7 +69,7 @@ angular.module('yama2showcaseApp').controller('ArticleCtrl', function ($scope, $
 		$scope.error = true;
 	};
 	
-}).controller('ArticleFormCtrl', function($scope, $modalInstance, Articles, article, Categories, $cacheFactory) {
+}).controller('ArticleFormCtrl', function($scope, $modalInstance, Articles, article, Categories) {
 	
 	Categories.getList($scope.searchParams).then(function(categories) {
 		$scope.categories = categories;
@@ -101,12 +101,7 @@ angular.module('yama2showcaseApp').controller('ArticleCtrl', function ($scope, $
 		article.put().then(success, error);
 	};
 	
-	var invalidateCache = function() {
-		$cacheFactory.get('$http').remove(article.one('tags').getRequestedUrl());
-	};
-	
 	var success = function() {
-		invalidateCache();
 		$modalInstance.close();
 	};
 	
